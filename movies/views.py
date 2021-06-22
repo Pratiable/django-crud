@@ -21,9 +21,9 @@ class ActorViews(View):
         results = []
         for actor in actors:
             titles = []
-            t = actor.movies.values('title')
-            for i in range(len(t)):
-                titles.append(t[i]['title'])
+            movies = actor.movies.all()
+            for movie in movies:
+                titles.append(movie.title)
             results.append(
                 {
                     'first_name' : actor.first_name,
@@ -48,16 +48,16 @@ class MovieViews(View):
         movies = Movie.objects.all()
         results = []
         for movie in movies:
-            actors=[]
-            m = movie.actors.values_list('first_name', 'last_name')
-            for i in range(len(m)):
-                name = f'''{m[i][0]} {m[i][1]}'''
-                actors.append(name)
+            actors_list=[]
+            actors = movie.actors.all()
+            for actor in actors:
+                name = f'''{actor.first_name} {actor.last_name}'''
+                actors_list.append(name)
             results.append(
                 {
                     'title' : movie.title,
                     'running_time': movie.running_time,
-                    'actors' : actors
+                    'actors' : actors_list
                 }
             )
         return JsonResponse({'Results':results}, status=200)
