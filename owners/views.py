@@ -24,7 +24,7 @@ class OwnersView(View):
             for dog in dogs:
                 dog_name_age = {
                     'name': dog.name,
-                    'age': dog.age
+                    'age' : dog.age
                 }
                 dog_list.append(dog_name_age)
             results.append(
@@ -56,8 +56,8 @@ class DogsView(View):
             results.append(
                 {
                     'name' : dog.name,
-                    'age' : dog.age,
-                    'owner' : dog.owner.name,
+                    'age'  : dog.age,
+                    'owner': dog.owner.name,
                 }
             )
         return JsonResponse({"Results":results}, status=200)
